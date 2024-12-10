@@ -31,18 +31,17 @@ A comprehensive web application to analyze resumes, provide skill recommendation
    git clone https://github.com/your-username/resume-analyser.git
    cd resume-analyser
 2. Install dependencies:
-
-  ```bash
-  pip install -r requirements.txt
-  ```
+    ```bash
+    pip install -r requirements.txt
+    ```
 3. Set up the database:
   - Create a PostgreSQL database named resume.
   - Use the credentials defined in the create_db_connection function of Resume_Analyser.py to connect to the database.
 
 4. Download required NLTK data:
-  ```bash
-  python -m nltk.downloader stopwords
-  ```
+    ```bash
+    python -m nltk.downloader stopwords
+    ```
 5. Run the application:
    ```bash
    streamlit run Resume_Analyser.py
