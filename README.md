@@ -46,4 +46,3 @@ A comprehensive web application to analyze resumes, provide skill recommendation
 5. Run the application:
    ```bash
    streamlit run Resume_Analyser.py
-  ```
