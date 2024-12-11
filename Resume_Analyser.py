@@ -17,7 +17,10 @@ from PIL import Image
 import psycopg2
 import yt_dlp
 import plotly.express as px
-from Courses import ds_course, web_course, android_course, ios_course, uiux_course, resume_videos, interview_videos
+from Courses import ds_course, web_course, android_course, ios_course, uiux_course, resume_videos
+import nltk
+
+nltk.download('stopwords')
 
 # Adding database
 
