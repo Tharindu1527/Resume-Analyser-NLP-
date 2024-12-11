@@ -17,17 +17,20 @@ from PIL import Image
 import psycopg2
 import yt_dlp
 import plotly.express as px
-<<<<<<< HEAD
 from Courses import ds_course, web_course, android_course, ios_course, uiux_course, resume_videos
 import nltk
+from nltk.corpus import stopwords
 
 nltk.download('stopwords')
-=======
-from Courses import ds_course, web_course, android_course, ios_course, uiux_course, resume_videos, interview_videos
-import nltk
->>>>>>> 7c63b372793c73f76ff2ae8c3cc5ccdfe865b3fb
 
-nltk.download('stopwords')
+try:
+    stop_words = set(stopwords.words('english'))
+except LookupError:
+    print("Stopwords resource not found. Downloading...")
+    import nltk
+    nltk.download('stopwords')
+    stop_words = set(stopwords.words('english'))
+
 # Adding database
 
 def create_db_connection():
@@ -200,7 +203,7 @@ def run():
 
                 st.subheader("**Skills Recommendation**")
                 skills = resume_data.get('skills', [])
-                keywords = st_tags(label='## Skills you have', value=skills, key='1')
+                keywords = st_tags(label='*Skills you have*', value=skills, key='1')
 
                 ds_keyword = ['tensorflow', 'keras', 'pytorch', 'machine learning', 'deep learning', 'flask', 'streamlit']
                 web_keyword = ['react', 'django', 'node jS', 'react js', 'php', 'laravel', 'magento', 'wordpress',
@@ -222,7 +225,7 @@ def run():
                     if i.lower() in ds_keyword:
                         print(i.lower())
                         reco_field = 'Data Science'
-                        st.success("** Our analysis says you are looking for Data Science Jobs.**")
+                        st.success(' **Our analysis says you are looking for Data Science Jobs.** ')
                         recommended_skills = ['Data Visualization', 'Predictive Analysis', 'Statistical Modeling',
                                               'Data Mining', 'Clustering & Classification', 'Data Analytics',
                                               'Quantitative Analysis', 'Web Scraping', 'ML Algorithms', 'Keras',
@@ -232,7 +235,7 @@ def run():
                                                        text='Recommended skills generated from System',
                                                        value=recommended_skills, key='2')
                         st.markdown(
-                            '''<h4 style='text-align: left; color: #1ed760;'>Adding this skills to resume will boost🚀 the chances of getting a Job💼</h4>''',
+                            '''<h4 style='text-align: left; color: #1ed760;'>If You Can improve below skills That caused to getting Best Job</h4>''',
                             unsafe_allow_html=True)
                         rec_course = course_recommender(ds_course)
                         break
@@ -241,14 +244,14 @@ def run():
                     elif i.lower() in web_keyword:
                         print(i.lower())
                         reco_field = 'Web Development'
-                        st.success("** Our analysis says you are looking for Web Development Jobs **")
+                        st.success('** Our analysis says you are looking for Web Development Jobs **')
                         recommended_skills = ['React', 'Django', 'Node JS', 'React JS', 'php', 'laravel', 'Magento',
                                               'wordpress', 'Javascript', 'Angular JS', 'c#', 'Flask', 'SDK']
                         recommended_keywords = st_tags(label='### Recommended skills for you.',
                                                        text='Recommended skills generated from System',
                                                        value=recommended_skills, key='3')
                         st.markdown(
-                            '''<h4 style='text-align: left; color: #1ed760;'>Adding this skills to resume will boost🚀 the chances of getting a Job💼</h4>''',
+                            '''<h4 style='text-align: left; color: #1ed760;'>If You Can improve above skills That caused to getting Best Job</h4>''',
                             unsafe_allow_html=True)
                         rec_course = course_recommender(web_course)
                         break
@@ -264,7 +267,7 @@ def run():
                                                        text='Recommended skills generated from System',
                                                        value=recommended_skills, key='4')
                         st.markdown(
-                            '''<h4 style='text-align: left; color: #1ed760;'>Adding this skills to resume will boost🚀 the chances of getting a Job💼</h4>''',
+                            '''<h4 style='text-align: left; color: #1ed760;'>If You Can improve above skills That caused to getting Best Job</h4>''',
                             unsafe_allow_html=True)
                         rec_course = course_recommender(android_course)
                         break
@@ -281,7 +284,7 @@ def run():
                                                        text='Recommended skills generated from System',
                                                        value=recommended_skills, key='5')
                         st.markdown(
-                            '''<h4 style='text-align: left; color: #1ed760;'>Adding this skills to resume will boost🚀 the chances of getting a Job💼</h4>''',
+                            '''<h4 style='text-align: left; color: #1ed760;'>If You Can improve above skills That caused to getting Best Job</h4>''',
                             unsafe_allow_html=True)
                         rec_course = course_recommender(ios_course)
                         break
@@ -299,7 +302,7 @@ def run():
                                                        text='Recommended skills generated from System',
                                                        value=recommended_skills, key='6')
                         st.markdown(
-                            '''<h4 style='text-align: left; color: #1ed760;'>Adding this skills to resume will boost🚀 the chances of getting a Job💼</h4>''',
+                            '''<h4 style='text-align: left; color: #1ed760;'>If You Can improve above skills That caused to getting Best Job</h4>''',
                             unsafe_allow_html=True)
                         rec_course = course_recommender(uiux_course)
                         break
@@ -311,7 +314,7 @@ def run():
                 timestamp = str(cur_date + '_' + cur_time)
 
                 ### Resume writing recommendation
-                st.subheader("**Resume Tips & Ideas💡**")
+                st.subheader("**Resume Tips & Ideas**")
                 resume_score = 0
                 if 'Objective' in resume_text:
                     resume_score = resume_score + 20
@@ -326,95 +329,41 @@ def run():
                 if 'Declaration' in resume_text:
                     resume_score = resume_score + 20
                     st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added Delcaration✍/h4>''',
+                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added Delcaration/h4>''',
                         unsafe_allow_html=True)
                 else:
                     st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Declaration✍. It will give the assurance that everything written on your resume is true and fully acknowledged by you</h4>''',
+                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Declaration. It will give the assurance that everything written on your resume is true and fully acknowledged by you</h4>''',
                         unsafe_allow_html=True)
 
                 if 'Hobbies' or 'Interests' in resume_text:
                     resume_score = resume_score + 20
                     st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Hobbies⚽</h4>''',
+                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Hobbies.</h4>''',
                         unsafe_allow_html=True)
                 else:
                     st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Hobbies⚽. It will show your persnality to the Recruiters and give the assurance that you are fit for this role or not.</h4>''',
+                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Hobbies. It will show your persnality to the Recruiters and give the assurance that you are fit for this role or not.</h4>''',
                         unsafe_allow_html=True)
 
                 if 'Achievements' in resume_text:
                     resume_score = resume_score + 20
                     st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Achievements🏅 </h4>''',
+                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Achievements </h4>''',
                         unsafe_allow_html=True)
                 else:
                     st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Achievements🏅. It will show that you are capable for the required position.</h4>''',
+                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Achievements. It will show that you are capable for the required position.</h4>''',
                         unsafe_allow_html=True)
 
                 if 'Projects' in resume_text:
                     resume_score = resume_score + 20
                     st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Projects👨‍💻 </h4>''',
+                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Projects </h4>''',
                         unsafe_allow_html=True)
                 else:
                     st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Projects👨‍💻. It will show that you have done work related the required position or not.</h4>''',
-                        unsafe_allow_html=True)
-
-
-                ### Resume writing recommendation
-                st.subheader("**Resume Tips & Ideas💡**")
-                resume_score = 0
-                if 'Objective' in resume_text:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added Objective</h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add your career objective, it will give your career intension to the Recruiters.</h4>''',
-                        unsafe_allow_html=True)
-
-                if 'Declaration' in resume_text:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added Delcaration✍/h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Declaration✍. It will give the assurance that everything written on your resume is true and fully acknowledged by you</h4>''',
-                        unsafe_allow_html=True)
-
-                if 'Hobbies' or 'Interests' in resume_text:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Hobbies⚽</h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Hobbies⚽. It will show your persnality to the Recruiters and give the assurance that you are fit for this role or not.</h4>''',
-                        unsafe_allow_html=True)
-
-                if 'Achievements' in resume_text:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Achievements🏅 </h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Achievements🏅. It will show that you are capable for the required position.</h4>''',
-                        unsafe_allow_html=True)
-
-                if 'Projects' in resume_text:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Projects👨‍💻 </h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Projects👨‍💻. It will show that you have done work related the required position or not.</h4>''',
+                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Projects. It will show that you have done work related the required position or not.</h4>''',
                         unsafe_allow_html=True)
 
 
@@ -427,7 +376,7 @@ def run():
 )
 
                 
-                st.header("**Bonus Video for Resume Writing**")
+                st.header("**Additional Video for Resume Writing**")
                 resume_vid = random.choice(resume_videos)
                 st.subheader(fetch_yt_video(resume_vid))
                 st.video(resume_vid)
